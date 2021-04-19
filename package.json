@@ -1,7 +1,11 @@
 {
   "name": "desafio-irancho",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./src/server.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "startdev": "nodemon ./src/server.js"
+  },
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
