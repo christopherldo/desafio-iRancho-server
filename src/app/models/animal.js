@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const animal = sequelize.define('animal', {
+  const animal = sequelize.define('Animal', {
     fk_id_pessoa: DataTypes.INTEGER,
     id_fazenda: DataTypes.INTEGER,
     no_animal: DataTypes.STRING,

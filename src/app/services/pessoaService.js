@@ -2,39 +2,39 @@ const {
   Sequelize
 } = require('sequelize');
 const {
-  pessoa
+  Pessoa
 } = require('../models');
 
 module.exports = {
   getPessoaByEmail: async email => {
-    return await pessoa.findOne({
+    return await Pessoa.findOne({
       where: {
         no_email: email,
       },
     });
   },
   create: async pessoaObject => {
-    return await pessoa.create(pessoaObject);
+    return await Pessoa.create(pessoaObject);
   },
   readAll: async () => {
-    return await pessoa.findAll()
+    return await Pessoa.findAll()
   },
   readById: async id => {
-    return await pessoa.findOne({
+    return await Pessoa.findOne({
       where: {
         id,
       },
     });
   },
   update: async pessoaObject => {
-    return await pessoa.update(pessoaObject, {
+    return await Pessoa.update(pessoaObject, {
       where: {
         id: pessoaObject.id,
       },
     });
   },
   toggleActivate: async id => {
-    return await pessoa.update({
+    return await Pessoa.update({
       ic_ativo: Sequelize.literal('NOT ic_ativo')
     }, {
       where: {
@@ -43,7 +43,7 @@ module.exports = {
     });
   },
   delete: async id => {
-    return await pessoa.destroy({
+    return await Pessoa.destroy({
       where: {
         id,
       },

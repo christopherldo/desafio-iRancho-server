@@ -28,10 +28,10 @@ module.exports = {
     try {
       json.pessoa = await pessoaService.create(data);
     } catch (error) {
-      json.error.push(error.message);
+      json.error = error.message;
     };
 
-    if (json.error > 0) {
+    if (json.error) {
       res.status(500).send(json);
       return;
     };
@@ -47,10 +47,10 @@ module.exports = {
     try {
       json.pessoaArray = await pessoaService.readAll();
     } catch (error) {
-      json.error.push(error.message);
+      json.error = error.message;
     };
 
-    if (json.error > 0) {
+    if (json.error) {
       res.status(500).send(json);
       return;
     };
@@ -78,10 +78,10 @@ module.exports = {
     try {
       json.pessoa = await pessoaService.readById(id);
     } catch (error) {
-      json.error.push(error.message);
+      json.error = error.message;
     };
 
-    if (json.error > 0) {
+    if (json.error) {
       res.status(500).send(json);
       return;
     };
@@ -102,21 +102,21 @@ module.exports = {
 
     const json = {
       error: '',
-      pessoa: {},
+      pessoa: data,
     };
 
     try {
-      json.pessoa = await pessoaService.update(data);
+      await pessoaService.update(data);
     } catch (error) {
-      json.error.push(error.message);
+      json.error = error.message;
     };
 
-    if (json.error > 0) {
+    if (json.error) {
       res.status(500).send(json);
       return;
     };
 
-    res.json(data);
+    res.json(json);
   },
   delete: async (req, res) => {
     const errors = validationResult(req);
@@ -138,10 +138,10 @@ module.exports = {
     try {
       await pessoaService.delete(id);
     } catch (error) {
-      json.error.push(error.message);
+      json.error = error.message;
     };
 
-    if (json.error > 0) {
+    if (json.error) {
       res.status(500).send(json);
       return;
     };
@@ -168,10 +168,10 @@ module.exports = {
     try {
       await pessoaService.toggleActivate(id);
     } catch (error) {
-      json.error.push(error.message);
+      json.error = error.message;
     };
 
-    if (json.error > 0) {
+    if (json.error) {
       res.status(500).send(json);
       return;
     };

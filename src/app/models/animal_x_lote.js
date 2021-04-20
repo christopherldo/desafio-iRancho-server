@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const animal_x_lote = sequelize.define('animal_x_lote', {
+  const animal_x_lote = sequelize.define('AnimalXLote', {
     fk_id_animal: DataTypes.INTEGER,
     fk_id_lote: DataTypes.INTEGER,
     dt_entrada: DataTypes.DATE,
