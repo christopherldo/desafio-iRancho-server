@@ -27,12 +27,17 @@ router.put('/pessoa/:id',
   pessoaController.update,
 );
 
+router.patch('/pessoa/:id',
+  pessoaValidator.toggleActivate,
+  pessoaController.toggleActivate,
+);
+
 router.delete('/pessoa/:id',
   pessoaValidator.delete,
   pessoaController.delete,
 );
 
-router.get('/pessoa/', 
+router.get('/pessoa/',
   pessoaController.readAll,
 );
 

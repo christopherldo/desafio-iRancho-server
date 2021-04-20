@@ -74,8 +74,12 @@ module.exports = {
       errorMessage: 'O id precisa ser um número inteiro',
       custom: {
         options: async value => {
-          if (await pessoaService.readById(value) === null) {
-            throw new Error('Pessoa não encontrada');
+          try {
+            if (await pessoaService.readById(value) === null) {
+              throw new Error('Pessoa não encontrada');
+            };
+          } catch (error) {
+            throw new Error(error.message);
           };
 
           return true;
@@ -91,8 +95,12 @@ module.exports = {
       errorMessage: 'O id precisa ser um número inteiro',
       custom: {
         options: async value => {
-          if (await pessoaService.readById(value) === null) {
-            throw new Error('Pessoa não encontrada');
+          try {
+            if (await pessoaService.readById(value) === null) {
+              throw new Error('Pessoa não encontrada');
+            };
+          } catch (error) {
+            throw new Error(error.message);
           };
 
           return true;
@@ -175,8 +183,33 @@ module.exports = {
       errorMessage: 'O id precisa ser um número inteiro',
       custom: {
         options: async value => {
-          if (await pessoaService.readById(value) === null) {
-            throw new Error('Pessoa não encontrada');
+          try {
+            if (await pessoaService.readById(value) === null) {
+              throw new Error('Pessoa não encontrada');
+            };
+          } catch (error) {
+            throw new Error(error.message);
+          };
+
+          return true;
+        },
+      },
+    },
+  }),
+  toggleActivate: checkSchema({
+    id: {
+      notEmpty: true,
+      isInt: true,
+      toInt: true,
+      errorMessage: 'O id precisa ser um número inteiro',
+      custom: {
+        options: async value => {
+          try {
+            if (await pessoaService.readById(value) === null) {
+              throw new Error('Pessoa não encontrada');
+            };
+          } catch (error) {
+            throw new Error(error.message);
           };
 
           return true;

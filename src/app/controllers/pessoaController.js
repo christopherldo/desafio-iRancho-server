@@ -31,7 +31,7 @@ module.exports = {
       json.error.push(error.message);
     };
 
-    if (json.error.length > 0) {
+    if (json.error > 0) {
       res.status(500).send(json);
       return;
     };
@@ -50,7 +50,7 @@ module.exports = {
       json.error.push(error.message);
     };
 
-    if (json.error.length > 0) {
+    if (json.error > 0) {
       res.status(500).send(json);
       return;
     };
@@ -81,7 +81,7 @@ module.exports = {
       json.error.push(error.message);
     };
 
-    if (json.error.length > 0) {
+    if (json.error > 0) {
       res.status(500).send(json);
       return;
     };
@@ -111,7 +111,7 @@ module.exports = {
       json.error.push(error.message);
     };
 
-    if (json.error.length > 0) {
+    if (json.error > 0) {
       res.status(500).send(json);
       return;
     };
@@ -141,7 +141,37 @@ module.exports = {
       json.error.push(error.message);
     };
 
-    if (json.error.length > 0) {
+    if (json.error > 0) {
+      res.status(500).send(json);
+      return;
+    };
+
+    res.json(json);
+  },
+  toggleActivate: async (req, res) => {
+    const errors = validationResult(req);
+
+    if (errors.isEmpty() === false) {
+      res.status(400).send({
+        error: errors.mapped(),
+      });
+      return;
+    };
+
+    const data = matchedData(req);
+    const id = data.id;
+
+    const json = {
+      error: '',
+    };
+
+    try {
+      await pessoaService.toggleActivate(id);
+    } catch (error) {
+      json.error.push(error.message);
+    };
+
+    if (json.error > 0) {
       res.status(500).send(json);
       return;
     };

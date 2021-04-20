@@ -1,4 +1,7 @@
 const {
+  Sequelize
+} = require('sequelize');
+const {
   pessoa
 } = require('../models');
 
@@ -27,6 +30,15 @@ module.exports = {
     return await pessoa.update(pessoaObject, {
       where: {
         id: pessoaObject.id,
+      },
+    });
+  },
+  toggleActivate: async id => {
+    return await pessoa.update({
+      ic_ativo: Sequelize.literal('NOT ic_ativo')
+    }, {
+      where: {
+        id,
       },
     });
   },
