@@ -9,14 +9,16 @@ const {
   pessoaValidator
 } = require('./app/validators');
 
-// Know if server is on requesting this route
+// Know if server is on by requesting this route
 router.get('/ping', (req, res) => {
   res.json({
     pong: true,
   });
 });
 
-// Pessoa CRUD related routes
+/* 
+ * Pessoa related routes
+ */
 router.get('/pessoa/:id',
   pessoaValidator.readById,
   pessoaController.readById,
@@ -45,5 +47,9 @@ router.post('/pessoa/',
   pessoaValidator.create,
   pessoaController.create,
 );
+
+/* 
+ * Animal related routes
+ */
 
 module.exports = router;
