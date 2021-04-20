@@ -1,5 +1,6 @@
 const {
-  checkSchema, check
+  checkSchema,
+  check
 } = require('express-validator');
 
 const {
