@@ -18,15 +18,15 @@ module.exports = {
       },
       dt_entrada: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       dt_saida: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       dt_ultima_movimentacao: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       ic_bezerro: {
         allowNull: false,

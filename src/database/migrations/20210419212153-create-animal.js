@@ -13,7 +13,6 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       id_fazenda: {
-        allowNull: false,
         type: Sequelize.INTEGER
       },
       no_animal: {
@@ -30,11 +29,11 @@ module.exports = {
       },
       vr_peso: {
         allowNull: false,
-        type: Sequelize.DECIMAL
+        type: Sequelize.INTEGER
       },
       dt_nascimento: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
     });
   },
