@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  pessoaController
+  pessoaController,
+  animalController
 } = require('./app/controllers');
 
 const {
-  pessoaValidator
+  pessoaValidator,
+  animalValidator
 } = require('./app/validators');
 
 // Know if server is on by requesting this route
@@ -51,5 +53,28 @@ router.post('/pessoa/',
 /* 
  * Animal related routes
  */
+router.get('/animal/:id',
+  animalValidator.readById,
+  animalController.readById,
+);
+
+router.put('/animal/:id',
+  animalValidator.update,
+  animalController.update,
+);
+
+router.delete('/animal/:id',
+  animalValidator.delete,
+  animalController.delete,
+);
+
+router.get('/animal/',
+  animalController.readAll,
+);
+
+router.post('/animal/',
+  animalValidator.create,
+  animalController.create,
+);
 
 module.exports = router;
