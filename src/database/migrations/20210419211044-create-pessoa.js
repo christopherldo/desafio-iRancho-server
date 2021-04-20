@@ -10,13 +10,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       no_pessoa: {
-        type: Sequelize.STRING(64),
+        type: Sequelize.STRING,
         allowNull: false,
       },
       no_email: {
         unique: true,
         allowNull: false,
-        type: Sequelize.STRING(64),
+        type: Sequelize.STRING,
       },
       endereco: {
         allowNull: false,

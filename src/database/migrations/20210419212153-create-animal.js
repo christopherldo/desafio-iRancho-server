@@ -18,11 +18,11 @@ module.exports = {
       },
       no_animal: {
         allowNull: false,
-        type: Sequelize.STRING(64)
+        type: Sequelize.STRING
       },
       no_raca: {
         allowNull: false,
-        type: Sequelize.STRING(64)
+        type: Sequelize.STRING
       },
       sexo: {
         allowNull: false,
