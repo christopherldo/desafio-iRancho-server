@@ -14,7 +14,7 @@ module.exports = {
       },
       ds_lote: {
         allowNull: false,
-        type: Sequelize.DECIMAL
+        type: Sequelize.TEXT
       },
     });
   },
