@@ -4,13 +4,15 @@ const router = express.Router();
 const {
   pessoaController,
   animalController,
-  animalLoteController, 
+  animalLoteController,
+  animalXLoteController,
 } = require('./app/controllers');
 
 const {
   pessoaValidator,
   animalValidator,
   animalLoteValidator,
+  animalXLoteValidator,
 } = require('./app/validators');
 
 // Know if server is on by requesting this route
@@ -104,6 +106,33 @@ router.get('/lote/',
 router.post('/lote/',
   animalLoteValidator.create,
   animalLoteController.create,
+);
+
+/* 
+ * Animal and Lote relations related routes
+ */
+router.get('/animal-x-lote/:id',
+  animalXLoteValidator.readById,
+  animalXLoteController.readById,
+);
+
+router.put('/animal-x-lote/:id',
+  animalXLoteValidator.update,
+  animalXLoteController.update,
+);
+
+router.delete('/animal-x-lote/:id',
+  animalXLoteValidator.delete,
+  animalXLoteController.delete,
+);
+
+router.get('/animal-x-lote/',
+  animalXLoteController.readAll,
+);
+
+router.post('/animal-x-lote/',
+  animalXLoteValidator.create,
+  animalXLoteController.create,
 );
 
 module.exports = router;
