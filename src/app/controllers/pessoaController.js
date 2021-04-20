@@ -99,14 +99,16 @@ module.exports = {
     };
 
     const data = matchedData(req);
+    const id = data.id;
 
     const json = {
       error: '',
-      pessoa: data,
+      pessoa: {},
     };
 
     try {
       await pessoaService.update(data);
+      json.pessoa = await pessoaService.readById(id);
     } catch (error) {
       json.error = error.message;
     };
@@ -163,10 +165,12 @@ module.exports = {
 
     const json = {
       error: '',
+      pessoa: {},
     };
 
     try {
       await pessoaService.toggleActivate(id);
+      json.pessoa = await pessoaService.readById(id);
     } catch (error) {
       json.error = error.message;
     };

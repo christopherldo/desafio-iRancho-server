@@ -32,7 +32,7 @@ module.exports = {
           };
 
           if (pessoa) {
-            throw new Error('Esse e-mail não está disponível para cadastro');
+            throw new Error(`Esse e-mail já está cadastrado no nome de ${pessoa.no_pessoa}`);
           };
 
           return true;
@@ -64,6 +64,11 @@ module.exports = {
           };
         },
       },
+    },
+    ic_ativo: {
+      isBoolean: true,
+      toBoolean: true,
+      errorMessage: "O campo ic_ativo precisa conter valor verdadeiro ou falso",
     },
   }),
   readById: checkSchema({
@@ -173,6 +178,12 @@ module.exports = {
           };
         },
       },
+    },
+    ic_ativo: {
+      optional: true,
+      isBoolean: true,
+      toBoolean: true,
+      errorMessage: "O campo ic_ativo precisa conter valor verdadeiro ou falso",
     },
   }),
   delete: checkSchema({
