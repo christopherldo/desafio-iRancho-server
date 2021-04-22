@@ -195,7 +195,18 @@ module.exports = {
     dt_nascimento: {
       optional: true,
       isDate: true,
-      errorMessage: 'A data de nascimento precisa ser preenchida e precisa estar em um formato válido',
+      errorMessage: 'A data precisa ser preenchida e precisa estar em um formato válido',
+      custom: {
+        options: value => {
+          const dateNow = new Date();
+          const birthDate = new Date(value);
+          if(birthDate > dateNow) {
+            throw new Error('A data de nascimento não pode ser superior ao dia de hoje');
+          };
+
+          return true;
+        },
+      },
     },
   }),
   delete: checkSchema({

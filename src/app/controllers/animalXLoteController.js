@@ -144,6 +144,9 @@ module.exports = {
     };
 
     const data = matchedData(req);
+    const dateNow = new Date();
+    data.dt_ultima_movimentacao = dateNow;
+    
     const id = data.id;
 
     const json = {

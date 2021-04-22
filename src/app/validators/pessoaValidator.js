@@ -142,7 +142,7 @@ module.exports = {
 
           if (pessoa) {
             if (pessoa.id !== req.params.id) {
-              throw new Error('Esse e-mail já está em uso');
+              throw new Error(`Esse e-mail já está cadastrado no nome de ${pessoa.no_pessoa}`);
             };
 
             return true;

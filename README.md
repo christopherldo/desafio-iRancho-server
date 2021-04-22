@@ -8,4 +8,4 @@
 * If you want to undo the database creation: ```npx sequelize db:migrate:undo:all``` or ```yarn sequelize db:migrate:undo:all```;
 
 # Front-end
-Front-end app here: <a href="#">WIP</a>
+Front-end app here: <a href="https://github.com/christopherldo/desafio-iRancho-client">iRancho Client</a>
