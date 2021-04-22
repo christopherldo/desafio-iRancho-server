@@ -3,6 +3,8 @@ const {
   matchedData
 } = require('express-validator');
 
+const {Op} = require('sequelize');
+
 const {
   pessoaService
 } = require('../services');
@@ -44,8 +46,32 @@ module.exports = {
       pessoaArray: [],
     };
 
+    const options = {};
+    const q = req.query.q;
+
+    if(q) {
+      options.where = {
+        [Op.or]: [
+          { id: {
+            [Op.like]: `%${q}%`
+            }
+          },
+          {
+            no_pessoa: {
+              [Op.like]: `%${q}%`
+            }
+          },
+          {
+            no_email: {
+              [Op.like]: `%${q}%`
+            }
+          }
+        ]
+      };
+    };
+
     try {
-      json.pessoaArray = await pessoaService.readAll();
+      json.pessoaArray = await pessoaService.readAll(options);
     } catch (error) {
       json.error = error.message;
     };

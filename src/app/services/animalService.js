@@ -6,8 +6,8 @@ module.exports = {
   create: async animalObject => {
     return await Animal.create(animalObject);
   },
-  readAll: async () => {
-    return await Animal.findAll();
+  readAll: async options => {
+    return await Animal.findAll(options);
   },
   readById: async id => {
     return await Animal.findOne({

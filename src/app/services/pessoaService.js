@@ -16,8 +16,8 @@ module.exports = {
   create: async pessoaObject => {
     return await Pessoa.create(pessoaObject);
   },
-  readAll: async () => {
-    return await Pessoa.findAll()
+  readAll: async (options) => {
+    return await Pessoa.findAll(options)
   },
   readById: async id => {
     return await Pessoa.findOne({

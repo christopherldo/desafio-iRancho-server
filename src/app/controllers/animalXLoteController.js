@@ -3,8 +3,12 @@ const {
   matchedData
 } = require('express-validator');
 
+const {Op} = require('sequelize');
+
 const {
-  animalXLoteService
+  animalXLoteService,
+  animalService,
+  animalLoteService
 } = require('../services');
 
 module.exports = {
@@ -41,17 +45,57 @@ module.exports = {
   },
   readAll: async (req, res) => {
     const json = {
+      errorArray: [],
       error: '',
       animalXLoteArray: [],
     };
 
-    try {
-      json.animalXLoteArray = await animalXLoteService.readAll();
-    } catch (error) {
-      json.error = error.message;
+    const options = {};
+    const q = req.query.q;
+
+    if(q) {
+      options.where = {
+        [Op.or]: [
+          { id: {
+            [Op.like]: `%${q}%`
+            }
+          },
+        ]
+      };
     };
 
-    if (json.error) {
+    try {
+      const animalXLoteArray = await animalXLoteService.readAll(options); 
+      json.animalXLoteArray = animalXLoteArray.map(alocacao => {
+        return {
+          ...alocacao.dataValues,
+          animal: {},
+          lote: {},
+        };
+      })
+    } catch (error) {
+      json.errorArray.push(error.message);
+    };
+
+    for(alocacao of json.animalXLoteArray){
+      const animalPromise = new Promise((resolve, reject) => {
+        resolve(animalService.readById(alocacao.fk_id_animal));
+      });
+      const lotePromise = new Promise((resolve, reject) => {
+        resolve(animalLoteService.readById(alocacao.fk_id_lote));
+      });
+
+      try {
+        const [animal, lote] = await Promise.all([animalPromise, lotePromise]);
+        alocacao.animal = animal;
+        alocacao.lote = lote;
+      } catch (error) {
+        json.errorArray.push(error.message);
+      }
+    };
+
+    if (json.errorArray.length > 0) {
+      json.error = json.errorArray.join(', ');
       res.status(500).send(json);
       return;
     };

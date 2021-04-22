@@ -6,8 +6,8 @@ module.exports = {
   create: async animalXLoteObject => {
     return await AnimalXLote.create(animalXLoteObject);
   },
-  readAll: async () => {
-    return await AnimalXLote.findAll();
+  readAll: async options => {
+    return await AnimalXLote.findAll(options);
   },
   readById: async id => {
     return await AnimalXLote.findOne({

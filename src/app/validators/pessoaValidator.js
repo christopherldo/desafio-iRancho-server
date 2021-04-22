@@ -3,7 +3,8 @@ const {
 } = require('express-validator');
 
 const {
-  pessoaService
+  pessoaService,
+  animalService
 } = require('../services');
 
 module.exports = {
@@ -197,6 +198,10 @@ module.exports = {
           try {
             if (await pessoaService.readById(value) === null) {
               throw new Error('Pessoa não encontrada');
+            };
+            const animalsArray = await animalService.readAll({where: {fk_id_pessoa: value}});
+            if (animalsArray.length > 0) {
+              throw new Error('Essa pessoa não pode ser deletada porque está associada a animais');
             };
           } catch (error) {
             throw new Error(error.message);

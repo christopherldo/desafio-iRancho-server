@@ -5,6 +5,7 @@ const {
 
 const {
   animalLoteService,
+  animalXLoteService
 } = require('../services');
 
 module.exports = {
@@ -103,6 +104,10 @@ module.exports = {
           try {
             if (await animalLoteService.readById(value) === null) {
               throw new Error('Lote não encontrado');
+            };
+            const alocacoesArray = await animalXLoteService.readAll({where: {fk_id_lote: value}});
+            if (alocacoesArray.length > 0) {
+              throw new Error('Essa lote não pode ser deletado porque está associado a alocações');
             };
           } catch (error) {
             throw new Error(error.message);

@@ -3,6 +3,8 @@ const {
   matchedData
 } = require('express-validator');
 
+const {Op} = require('sequelize');
+
 const {
   animalLoteService
 } = require('../services');
@@ -44,8 +46,31 @@ module.exports = {
       animalLoteArray: [],
     };
 
+    const options = {};
+    const q = req.query.q;
+
+    if(q) {
+      options.where = {
+        [Op.or]: [
+          { id: {
+            [Op.like]: `%${q}%`
+            }
+          },
+          { no_lote: {
+            [Op.like]: `%${q}%`
+            }
+          },
+          {
+            ds_lote: {
+              [Op.like]: `%${q}%`
+            }
+          },
+        ]
+      };
+    };
+
     try {
-      json.animalLoteArray = await animalLoteService.readAll();
+      json.animalLoteArray = await animalLoteService.readAll(options);
     } catch (error) {
       json.error = error.message;
     };

@@ -3,9 +3,12 @@ const {
   matchedData
 } = require('express-validator');
 
+const {Op} = require('sequelize');
+
 const {
   animalService
 } = require('../services');
+const pessoaService = require('../services/pessoaService');
 
 module.exports = {
   create: async (req, res) => {
@@ -45,22 +48,62 @@ module.exports = {
   },
   readAll: async (req, res) => {
     const json = {
+      errorArray: [],
       error: '',
       animalArray: [],
     };
 
-    try {
-      const animalArray = await animalService.readAll();
-      animalArray.forEach(animal => {
-        // Sempre exibir em kg pro usuário, para manter a experiência
-        animal.vr_peso = animal.vr_peso / 1000;
-        json.animalArray.push(animal);
-      });
-    } catch (error) {
-      json.error = error.message;
+    const options = {};
+    const q = req.query.q;
+
+    if(q) {
+      options.where = {
+        [Op.or]: [
+          { id: {
+            [Op.like]: `%${q}%`
+            }
+          },
+          { no_animal: {
+            [Op.like]: `%${q}%`
+            }
+          },
+          {
+            no_raca: {
+              [Op.like]: `%${q}%`
+            }
+          },
+          {
+            sexo: {
+              [Op.like]: `%${q}%`
+            }
+          },
+        ]
+      };
     };
 
-    if (json.error) {
+    try {
+      const animalArray = await animalService.readAll(options);
+      json.animalArray = animalArray.map(animal => {
+        return {
+          ...animal.dataValues,
+          pessoa: {},
+          vr_peso: animal.vr_peso / 1000
+        }
+      });
+    } catch (error) {
+      json.errorArray.push(error.message);
+    };
+
+    for(animal of json.animalArray){
+      try {
+        animal.pessoa = await pessoaService.readById(animal.fk_id_pessoa); 
+      } catch (error) {
+        json.errorArray.push(error.message);
+      }
+    };
+
+    if (json.errorArray.length > 0) {
+      json.error = json.errorArray.join(', ');
       res.status(500).send(json);
       return;
     };
